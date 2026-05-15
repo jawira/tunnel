@@ -1,0 +1,16 @@
+services:
+
+  ssh:
+    image: lscr.io/linuxserver/openssh-server:latest
+    restart: unless-stopped
+    environment:
+      # https://github.com/linuxserver/docker-mods/tree/openssh-server-ssh-tunnel
+      DOCKER_MODS: linuxserver/mods:openssh-server-ssh-tunnel
+      USER_NAME: tunneluser
+      PUBLIC_KEY_FILE: /tmp/tunnel_ssh.pub
+    volumes:
+      - ~/.ssh/tunnel_ssh.pub:/tmp/tunnel_ssh.pub
+    ports:
+      - '2222:2222'
+    networks:
+      - default
